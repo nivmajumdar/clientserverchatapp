@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class server {
+    private static Socket ss;
+    
+    public static void main(String args[]) throws IOException
+    {
+         int numb;
+        String temp;
+        int filesize;
+        int numfilesint;
+        ServerSocket s1= new ServerSocket(1342);
+        System.out.println("Server Started and listening to the port 1342");
+       
+        while(true)
+        {
+             ss=s1.accept();
+            InputStream is= ss.getInputStream();
+            InputStreamReader isr=new InputStreamReader(is);
+            BufferedReader br=new BufferedReader(isr);
+            String numfiles=br.readLine();
+            numfilesint=Integer.parseInt(numfiles);
+            System.out.println("Message received from client is "+numfiles);
+            /*for(int i=1; i<=numfilesint; i++)
+            {
+                
+            }*/
+            
+            
+        
+            if(numfilesint>0)
+            temp="true\n";
+            else
+            temp="false\n";
+        
+            OutputStream os = ss.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(temp);
+            System.out.println("Message sent to the client is "+temp);
+                bw.flush();
+        }
+        //Socket ss=s1.accept();
+        
+    }
+    
+}
